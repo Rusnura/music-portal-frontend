@@ -256,10 +256,23 @@ JSON представление ответа:
 | Имя параметра | Тип данных |  Описание |
 | -- | -- | -- |
 | `audio` | `File` | .mp3 файл с content-type: `audio/mp3` |
-| `title` | `string` | Название песни |
-| `artist` | `string` | Исполнитель |
+| `body` | `JSON` | JSON представление аудиозаписи (поля `artist` и `title`) |
 
-Со следующим JSON содержимым:
+Пример необходимого запроса (Chrome Request Payload):
+```
+------WebKitFormBoundarym5eIWYWg1120zYQb
+Content-Disposition: form-data; name="audio"; filename="093-Starbound.mp3"
+Content-Type: audio/mp3
+
+
+------WebKitFormBoundarym5eIWYWg1120zYQb
+Content-Disposition: form-data; name="body"; filename="blob"
+Content-Type: application/json
+
+{"artist":"Open Source","title":"Starbound"}
+------WebKitFormBoundarym5eIWYWg1120zYQb--
+```
+
 В случае успешной загрузки аудиозаписи - вы получите JSON ответ, содержащий полное описание аудиозаписи.
 
 Коды ответа:
