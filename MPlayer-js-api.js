@@ -17,7 +17,10 @@ class WebRequest {
 				type: method,
 				url: url,
 				data: body,
-				headers: headers
+				headers: headers,
+				cache : false, 
+				contentType: false, // Need for multipart/form-data request
+				processData: false // Need for multipart/form-data request
 			}).done(function(data) {
 				resolve(data);
 			}).fail(function(reason) {
@@ -97,5 +100,42 @@ class MPlayerAPI {
 	
 	deleteAlbum(albumId) {
 		return this.webRequest.send(this.address + "api/album/" + albumId, "DELETE", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
+	createSong(mp3File, albumId, artist, title) {
+		let songData = {
+			artist: artist,
+			title: title
+		};
+		
+		let formData = new FormData();
+		formData.append("audio", mp3File);
+		formData.append("body", new Blob([JSON.stringify(songData)], {type: "application/json"}));
+		return this.webRequest.send(this.address + "api/album/" + albumId + "/song", "POST", formData, {...this.headers, "Content-Type": undefined, "Authorization": "Bearer " + this.token});
+	}
+	
+	getSong(albumId, songId) {
+		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
+	getSongMP3File(albumId, songId) {
+		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId + "/mp3", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
+	getAlbumSongs(albumId) {
+		return this.webRequest.send(this.address + "api/album/" + albumId + "/songs", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
+	editSong(albumId, songId, artist, title) {
+		let songData = {
+			artist: artist,
+			title: title
+		};
+
+		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "PUT", JSON.stringify(songData), {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
+	deleteSong(albumId, songId) {
+		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "DELETE", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 }
