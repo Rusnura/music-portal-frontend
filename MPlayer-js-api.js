@@ -114,6 +114,10 @@ class MPlayerAPI {
 		return this.webRequest.send(this.address + "api/album/" + albumId + "/song", "POST", formData, {...this.headers, "Content-Type": undefined, "Authorization": "Bearer " + this.token});
 	}
 	
+	getMySongs() {
+		return this.webRequest.send(this.address + "api/songs", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
 	getSong(albumId, songId) {
 		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
