@@ -88,6 +88,10 @@ class MPlayerAPI {
 		return this.webRequest.send(this.address + "api/user/" + username + "/albums", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
+	getMyAlbums() {
+		return this.webRequest.send(this.address + "api/albums", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	}
+	
 	editAlbum(albumId, name, description, internal) {
 		let albumData = {
 			name: name,
