@@ -70,43 +70,43 @@ class MPlayerAPI {
 		});
 	}
 	
-	createAlbum(name, description, internal) {
-		let albumData = {
+	createPlaylist(name, description, internal) {
+		let playlistData = {
 			name: name,
 			description: description,
 			internal: internal || false
 		};
 		
-		return this.webRequest.send(this.address + "api/album", "POST", JSON.stringify(albumData), {...this.headers, "Authorization": "Bearer " + this.token});
+		return this.webRequest.send(this.address + "api/playlist", "POST", JSON.stringify(playlistData), {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	getAlbum(albumId) {
-		return this.webRequest.send(this.address + "api/album/" + albumId, "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	getPlaylist(playlistId) {
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId, "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	getUserAlbums(username) {
-		return this.webRequest.send(this.address + "api/user/" + username + "/albums", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	getUserPlaylists(username) {
+		return this.webRequest.send(this.address + "api/user/" + username + "/playlists", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	getMyAlbums() {
-		return this.webRequest.send(this.address + "api/albums", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	getMyPlaylists() {
+		return this.webRequest.send(this.address + "api/playlists", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	editAlbum(albumId, name, description, internal) {
-		let albumData = {
+	editPlaylist(playlistId, name, description, internal) {
+		let playlistData = {
 			name: name,
 			description: description,
 			internal: internal || false
 		};
 		
-		return this.webRequest.send(this.address + "api/album/" + albumId, "PUT", JSON.stringify(albumData), {...this.headers, "Authorization": "Bearer " + this.token});
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId, "PUT", JSON.stringify(playlistData), {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	deleteAlbum(albumId) {
-		return this.webRequest.send(this.address + "api/album/" + albumId, "DELETE", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	deletePlaylist(playlistId) {
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId, "DELETE", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	createSong(mp3File, albumId, artist, title) {
+	createSong(mp3File, playlistId, artist, title) {
 		let songData = {
 			artist: artist,
 			title: title
@@ -115,35 +115,35 @@ class MPlayerAPI {
 		let formData = new FormData();
 		formData.append("audio", mp3File);
 		formData.append("body", new Blob([JSON.stringify(songData)], {type: "application/json"}));
-		return this.webRequest.send(this.address + "api/album/" + albumId + "/song", "POST", formData, {...this.headers, "Content-Type": undefined, "Authorization": "Bearer " + this.token});
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId + "/song", "POST", formData, {...this.headers, "Content-Type": undefined, "Authorization": "Bearer " + this.token});
 	}
 	
 	getMySongs() {
 		return this.webRequest.send(this.address + "api/songs", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	getSong(albumId, songId) {
-		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	getSong(playlistId, songId) {
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId + "/song/" + songId, "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	getSongMP3File(albumId, songId) {
-		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId + "/mp3", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	getSongMP3File(playlistId, songId) {
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId + "/song/" + songId + "/mp3", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	getAlbumSongs(albumId) {
-		return this.webRequest.send(this.address + "api/album/" + albumId + "/songs", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	getPlaylistSongs(playlistId) {
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId + "/songs", "GET", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	editSong(albumId, songId, artist, title) {
+	editSong(playlistId, songId, artist, title) {
 		let songData = {
 			artist: artist,
 			title: title
 		};
 
-		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "PUT", JSON.stringify(songData), {...this.headers, "Authorization": "Bearer " + this.token});
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId + "/song/" + songId, "PUT", JSON.stringify(songData), {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 	
-	deleteSong(albumId, songId) {
-		return this.webRequest.send(this.address + "api/album/" + albumId + "/song/" + songId, "DELETE", null, {...this.headers, "Authorization": "Bearer " + this.token});
+	deleteSong(playlistId, songId) {
+		return this.webRequest.send(this.address + "api/playlist/" + playlistId + "/song/" + songId, "DELETE", null, {...this.headers, "Authorization": "Bearer " + this.token});
 	}
 }
