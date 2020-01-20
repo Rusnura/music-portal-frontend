@@ -5,3 +5,11 @@ body {
 .pointer {
 	cursor: pointer;
 }
+
+.hover-red:hover {
+	color: red;
+}
+
+.hover-blue-violet:hover {
+	color: #8A2BE2;
+}
