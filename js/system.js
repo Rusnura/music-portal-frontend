@@ -3,7 +3,7 @@ var api = null;
 function init() {
 	__log("Initialization...");
 	__checkAuthentication().then(function() {
-		
+		__log("User is autorized!");
 	}).catch(function() {
 		document.location = "login.html";
 	});
@@ -22,11 +22,12 @@ function __checkAuthentication() {
 					if (data.token) {
 						resolve(true);
 					}
-				})
+				}).catch(function() {
+					reject(false);
+				});
 			}
 		} catch {
-			// NOP
+			reject(false);
 		}
-		reject(false);
 	});
 }
