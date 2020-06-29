@@ -4,8 +4,15 @@ function init() {
 	__log("Initialization...");
 	__checkAuthentication().then(function() {
 		__log("User is autorized!");
+		__init();
 	}).catch(function() {
 		document.location = "login.html";
+	});
+}
+
+function __init() {
+	__loadPlaylists().then(function(userPlaylistsJson) {
+		__log("Playlists loaded: ", userPlaylistsJson);
 	});
 }
 
@@ -28,6 +35,24 @@ function __checkAuthentication() {
 			}
 		} catch {
 			reject(false);
+		}
+	});
+}
+
+function __loadPlaylists(userName) {
+	return new Promise(function(resolve, reject) {
+		if (userName) {
+			api.getUserPlaylists(userName).then(function(userPlaylistsJson) {
+				resolve(userPlaylistsJson);
+			}).catch(function(cause) {
+				reject(cause);
+			});
+		} else {
+			api.getMyPlaylists().then(function(userPlaylistsJson) {
+				resolve(userPlaylistsJson);
+			}).catch(function(cause) {
+				reject(cause);
+			});
 		}
 	});
 }
